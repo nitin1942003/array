@@ -1,52 +1,44 @@
-# Prerequisites
-*.d
+#include<stdio.h>
+struct node{
+    int i;
+    int j;
+};
+struct node arr[50];
+int swtrends(float a[],float p,int i,int j){
+    
+    static int k=0;
+    float max=a[i],min=a[i];
+    int c=i,b=i;
+    for(int x=i;x<=j;x++){
+        if(a[x]>max){
+            max=a[x];
+            c=x;
+        }
+        if(a[x]<min){
+            min=a[x];
+            b=x;
+        }
+    }
+    if(max<=(1+(p/100))*min){
+        arr[k].i=i;
+        arr[k].j=j;
+        k++;
+        return j-i+1;
+    }
+    else{
+        int l=swtrends(a,p,i,(c>b)?c-1:b-1);
+        int r=swtrends(a,p,(c<b)?c+1:b+1,j);
+        return (l>r)?l:r;
+    }
+}
+int main(){
+    float arr1[]={100,100,100};
+    float p=5;
+    int length=swtrends(arr1,p,0,2);
+    for(int f=0; f<50; f++){
+        if(arr[f].j - arr[f].i==length-1){
+            printf("i=%d, j=%d",arr[f].i,arr[f].j);
+        }
+    }
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
-
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+}
